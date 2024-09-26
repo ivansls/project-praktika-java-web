@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Список cars</h1>
+<form action="/cars/add" method="post">
+    <input type="text" name="Brand" placeholder="Brand">
+    <input type="text" name="Model" placeholder="Model">
+    <input type="text" name="Color" placeholder="Color">
+    <!--    <input type="checkbox" name="IsExist" placeholder="IsExist">-->
+    <button type="submit" formmethod="post">Добавить cars</button>
+</form>
+
+<h1>search:</h1>
+<form action="/cars/search" method="get">
+    <input type="text" name="brand" placeholder="brand">
+    <input type="text" name="modell" placeholder="modell">
+    <button type="submit" formmethod="get">Поиск</button>
+</form>
+
+<h2>Все cars: </h2>
+<ul>
+    <th:block th:each="car : ${cars}">
+        <li>
+            <span th:text="${car.Brand} + ' ' + ${car.Color} + ' ' + ${car.Model}"></span>
+            <form action="/cars/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${car.Id}">
+                <input type="text" name="Brand" th:value="${car.Brand}" placeholder="Brand">
+                <input type="text" name="Color" th:value="${car.Color}" placeholder="Color">
+                <input type="text" name="Model" th:value="${car.Model}" placeholder="Model">
+                <!--                <input type="checkbox" name="IsExist" th:checked="${car.isExist}" placeholder="IsExist">-->
+                <button type="submit" formmethod="post">Обновить</button>
+            </form>
+            <form action="/cars/logic_delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${car.id}">
+                <button type="submit" formmethod="post">Логически удалить</button>
+            </form>
+            <form action="/cars/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${car.Id}">
+                <button type="submit" formmethod="post">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
