@@ -52,4 +52,10 @@ public class MusicController {
         model.addAttribute("musics", musicService.findMusicById(id));
         return "musicList";
     }
+
+    @GetMapping("/search")
+    public String musicSort(@RequestParam String author, Model model) {
+        model.addAttribute("musics", musicService.MusicSort(author));
+        return "musicList";
+    }
 }
