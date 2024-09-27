@@ -21,6 +21,16 @@
     <button type="submit" formmethod="get">Поиск</button>
 </form>
 
+
+<h1 style="margin-left: 25%;">Поиск по album:</h1>
+<form action="/musics/search_album"  method="get">
+    <select name="author">
+        <option th:each="music : ${musics}"
+                th:text="${music.Album}"></option>
+    </select>
+    <button type="submit" formmethod="get">Поиск</button>
+</form>
+
 <h2>Все music: </h2>
 <ul>
     <th:block th:each="music : ${musics}">

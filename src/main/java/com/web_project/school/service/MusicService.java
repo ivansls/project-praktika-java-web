@@ -14,4 +14,5 @@ public interface MusicService {
 
 
     List<MusicModel> MusicSort(String author);
+    List<MusicModel> musicSortAlbum(String author);
 }

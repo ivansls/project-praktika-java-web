@@ -48,4 +48,12 @@ public class InMemoryMusicServiceImpl implements MusicService{
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<MusicModel> musicSortAlbum(String album) {
+        return musicRepository.findAllMusic().stream()
+                .filter(music -> Objects.equals(music.getAlbum(), album))
+                .collect(Collectors.toList());
+
+    }
 }

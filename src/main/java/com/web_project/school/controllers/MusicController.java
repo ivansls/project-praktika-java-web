@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/musics")
 public class MusicController {
@@ -24,8 +27,8 @@ public class MusicController {
 
     @PostMapping("/add")
     public String addMusic(@RequestParam String Name,
-                          @RequestParam String Author,
-                          @RequestParam String Album) {
+                           @RequestParam String Author,
+                           @RequestParam String Album) {
         MusicModel newMusic = new MusicModel(0, Name, Author, Album);
         musicService.addMusic(newMusic);
         return "redirect:/musics/all";
@@ -33,9 +36,9 @@ public class MusicController {
 
     @PostMapping("/update")
     public String updateMusic(@RequestParam int id,
-                            @RequestParam String Name,
-                            @RequestParam String Author,
-                            @RequestParam String Album) {
+                              @RequestParam String Name,
+                              @RequestParam String Author,
+                              @RequestParam String Album) {
         MusicModel updateMusic = new MusicModel(id, Name, Author, Album);
         musicService.updateMusic(updateMusic);
         return "redirect:/musics/all";
@@ -56,6 +59,12 @@ public class MusicController {
     @GetMapping("/search")
     public String musicSort(@RequestParam String author, Model model) {
         model.addAttribute("musics", musicService.MusicSort(author));
+        return "musicList";
+    }
+
+    @GetMapping("/search_album")
+    public String musicSortAlbum(@RequestParam String author, Model model) {
+        model.addAttribute("musics", musicService.musicSortAlbum(author));
         return "musicList";
     }
 }
