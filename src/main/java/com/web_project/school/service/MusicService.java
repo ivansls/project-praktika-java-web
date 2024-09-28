@@ -9,8 +9,8 @@ public interface MusicService {
     public List<MusicModel> findAllMusic();
     public MusicModel addMusic(MusicModel music);
     public MusicModel updateMusic(MusicModel music);
-    public void deleteMusic(int id);
-    public MusicModel findMusicById(int id);
+    public void deleteMusic(Long id);
+    public MusicModel findMusicById(Long id);
 
 
     List<MusicModel> MusicSort(String author);

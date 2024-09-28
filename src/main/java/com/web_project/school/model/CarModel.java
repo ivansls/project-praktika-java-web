@@ -1,27 +1,42 @@
 package com.web_project.school.model;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 
+
+@Entity
 public class CarModel {
-    private int Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String Brand;
+    @Size(min = 1, message = "Color size error")
     private String Color;
     private String Model;
     private boolean IsExist;
 
-    public CarModel(int id, String brand, String color, String model) {
+    public CarModel(Long id, String brand, String color, String model, boolean isExist) {
         Id = id;
         Brand = brand;
         Color = color;
         Model = model;
-        IsExist = false;
+        IsExist = isExist;
     }
 
-    public int getId() {
+    public CarModel() {
+
+    }
+
+
+    public Long getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         Id = id;
     }
 
@@ -33,20 +48,19 @@ public class CarModel {
         Brand = brand;
     }
 
-    public String getColor() {
+    public @Size(min = 1, message = "Color size error") String getColor() {
         return Color;
     }
 
-    public void setColor(String color) {
+    public void setColor(@Size(min = 1, message = "Color size error") String color) {
         Color = color;
     }
 
-    @Nullable
     public String getModel() {
         return Model;
     }
 
-    public void setModel(@Nullable String model) {
+    public void setModel(String model) {
         Model = model;
     }
 
