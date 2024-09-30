@@ -2,7 +2,6 @@ package com.web_project.school.service;
 
 import com.web_project.school.model.StudentModel;
 import com.web_project.school.repository.StudentRepository;
-import jakarta.persistence.Id;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +33,17 @@ public class InMemoryStudentServiceImpl implements StudentService{
 
     @Override
     public StudentModel updateStudent(StudentModel student){
-        if(studentRepository.existsById(student.getId())){
+        if (studentRepository.existsById(student.getId())) {
             return studentRepository.save(student);
-        }else {
-            return null;
         }
+        return null;
     }
 
     @Override
     public void deleteStudent(UUID id){
-        if(studentRepository.existsById(id)) studentRepository.deleteById(id);
+        if (studentRepository.existsById(id)) {
+            studentRepository.deleteById(id);
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.web_project.school.controllers;
 
-import com.web_project.school.model.PasportModel;
 import com.web_project.school.model.UniversityModel;
 import com.web_project.school.service.UniversityService;
 import jakarta.validation.Valid;
@@ -13,45 +12,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/universities")
 public class UniversityController {
     @Autowired
     public UniversityService universityService;
 
+
     @GetMapping("/all")
-    public String getAllStudents(Model model) {
-        model.addAttribute("universityes", universityService.findAllUniversitys());
+    public String getAllUniversities(Model model) {
+        model.addAttribute("universities", universityService.findAllUniversities());
         model.addAttribute("university", new UniversityModel());
-        return "studentList";
+        return "universityList";
     }
 
     @PostMapping("/add")
-    public String addStudent(@Valid @ModelAttribute("student") UniversityModel student, BindingResult result, Model model) {
-        if (result.hasErrors()){
-            model.addAttribute("universityes", universityService.findAllUniversitys());
-            return "studentList";
+    public String addUniversity(@Valid @ModelAttribute("university") UniversityModel university, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("universities", universityService.findAllUniversities());
+            return "universityList";
         }
-        universityService.adduniversity(student);
-        return "redirect:/students/all";
+        universityService.addUniversity(university);
+        return "redirect:/universities/all";
     }
 
     @PostMapping("/update")
-    public String updateStudent(@Valid @ModelAttribute("student") UniversityModel student, BindingResult result) {
-        universityService.updateuniversity(student);
-        return "redirect:/students/all";
+    public String updateUniversity(@Valid @ModelAttribute("university") UniversityModel university, BindingResult result) {
+        universityService.updateUniversity(university);
+        return "redirect:/universities/all";
     }
 
     @PostMapping("/delete")
-    public String deleteStudent(@RequestParam UUID id) {
-        universityService.deleteuniversity(id);
-        return "redirect:/students/all";
+    public String deleteUniversity(@RequestParam UUID id) {
+        universityService.deleteUniversity(id);
+        return "redirect:/universities/all";
     }
 
     @GetMapping("/all/{id}")
-    public String getIdStudent(@PathVariable("id") UUID id, Model model) {
-        model.addAttribute("universityes", universityService.finduniversityById(id));
+    public String getIdUniversity(@PathVariable("id") UUID id, Model model) {
+        model.addAttribute("universities", universityService.findUniversityById(id));
         model.addAttribute("university", new UniversityModel());
-        return "studentList";
+        return "universityList";
     }
 
 

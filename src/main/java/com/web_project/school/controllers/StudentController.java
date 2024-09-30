@@ -1,6 +1,6 @@
 package com.web_project.school.controllers;
 
-import com.web_project.school.model.PasportModel;
+import com.web_project.school.model.PassportModel;
 import com.web_project.school.model.StudentModel;
 import com.web_project.school.service.StudentService;
 import com.web_project.school.service.UniversityService;
@@ -18,25 +18,27 @@ import java.util.UUID;
 public class StudentController {
     @Autowired
     public StudentService studentService;
+
+    @Autowired
     public UniversityService universityService;
 
     @GetMapping("/all")
     public String getAllStudents(Model model) {
         model.addAttribute("students", studentService.findAllStudents());
         model.addAttribute("student", new StudentModel());
-        model.addAttribute("universities", universityService.findAllUniversitys());
+        model.addAttribute("universities", universityService.findAllUniversities());
         return "studentList";
     }
 
     @PostMapping("/add")
     public String addStudent(@Valid @ModelAttribute("student") StudentModel student, BindingResult result, Model model) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("students", studentService.findAllStudents());
-            model.addAttribute("universities", universityService.findAllUniversitys());
+            model.addAttribute("universities", universityService.findAllUniversities());
             return "studentList";
         }
-        PasportModel pasport = student.getPasport();
-        student.setPasport(pasport);
+        PassportModel passport = student.getPassport();
+        student.setPassport(passport);
         studentService.addStudent(student);
         return "redirect:/students/all";
     }
@@ -57,7 +59,7 @@ public class StudentController {
     public String getIdStudent(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("students", studentService.findStudentById(id));
         model.addAttribute("student", new StudentModel());
-        model.addAttribute("universities", universityService.findAllUniversitys());
+        model.addAttribute("universities", universityService.findAllUniversities());
         return "studentList";
     }
 

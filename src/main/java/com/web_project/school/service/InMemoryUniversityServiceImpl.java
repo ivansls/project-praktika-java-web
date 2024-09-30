@@ -1,7 +1,7 @@
 package com.web_project.school.service;
 
 import com.web_project.school.model.UniversityModel;
-import com.web_project.school.repository.UniversitytRepository;
+import com.web_project.school.repository.UniversityRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -10,39 +10,40 @@ import java.util.UUID;
 
 @Service
 public class InMemoryUniversityServiceImpl implements UniversityService{
-    private final UniversitytRepository universityRepository;
+    private final UniversityRepository universityRepository;
 
-    public InMemoryUniversityServiceImpl(UniversitytRepository universityRepository) {
+    public InMemoryUniversityServiceImpl(UniversityRepository universityRepository) {
         this.universityRepository = universityRepository;
     }
 
     @Override
-    public List<UniversityModel> findAllUniversitys(){
+    public List<UniversityModel> findAllUniversities(){
         return universityRepository.findAll(Sort.by("id"));
     }
 
     @Override
-    public UniversityModel finduniversityById(UUID id) {
+    public UniversityModel findUniversityById(UUID id) {
         return universityRepository.findById(id).orElse(null);
     }
 
     @Override
-    public UniversityModel adduniversity(UniversityModel university){
+    public UniversityModel addUniversity(UniversityModel university){
         return universityRepository.save(university);
     }
 
     @Override
-    public UniversityModel updateuniversity(UniversityModel university){
-        if(universityRepository.existsById(university.getId())){
+    public UniversityModel updateUniversity(UniversityModel university){
+        if (universityRepository.existsById(university.getId())) {
             return universityRepository.save(university);
-        }else {
-            return null;
         }
+        return null;
     }
 
     @Override
-    public void deleteuniversity(UUID id){
-        if(universityRepository.existsById(id)) universityRepository.deleteById(id);
+    public void deleteUniversity(UUID id){
+        if (universityRepository.existsById(id)) {
+            universityRepository.deleteById(id);
+        }
     }
 
 }

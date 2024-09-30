@@ -1,6 +1,5 @@
 package com.web_project.school.model;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,9 +8,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "holidays")
 public class HolidayModel {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue
-    private UUID Id;
+    private UUID id;
     private String name;
 
     @ManyToMany
@@ -20,18 +19,21 @@ public class HolidayModel {
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<StudentModel> students;
 
+    public HolidayModel() {
+    }
+
     public HolidayModel(UUID id, String name, List<StudentModel> students) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.students = students;
     }
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -50,4 +52,3 @@ public class HolidayModel {
         this.students = students;
     }
 }
-

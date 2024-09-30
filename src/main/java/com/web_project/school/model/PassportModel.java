@@ -1,40 +1,38 @@
 package com.web_project.school.model;
 
-
 import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "pasport")
-public class PasportModel {
+@Table(name = "passports")
+public class PassportModel {
     @Id
     @GeneratedValue
-    private UUID Id;
+    private UUID id;
     private String series;
     private String number;
 
-
-    @OneToOne(optional = false, mappedBy = "pasport")
+    @OneToOne(optional = false, mappedBy = "passport")
     private StudentModel owner;
 
-    public PasportModel(){
+    public PassportModel() {
 
     }
 
-    public PasportModel(UUID id, String series, String number, StudentModel owner) {
-        Id = id;
-        this.series = series;
-        this.number = number;
+    public PassportModel(StudentModel owner, String number, String series, UUID id) {
         this.owner = owner;
+        this.number = number;
+        this.series = series;
+        this.id = id;
     }
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getSeries() {

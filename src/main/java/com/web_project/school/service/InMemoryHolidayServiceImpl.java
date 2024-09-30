@@ -1,7 +1,6 @@
 package com.web_project.school.service;
 
 import com.web_project.school.model.HolidayModel;
-import com.web_project.school.model.UniversityModel;
 import com.web_project.school.repository.HolidayRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class InMemoryHolidayServiceImpl implements HolidaysService{
+public class InMemoryHolidayServiceImpl implements HolidayService{
     private final HolidayRepository holidayRepository;
 
     public InMemoryHolidayServiceImpl(HolidayRepository holidayRepository) {
@@ -34,16 +33,17 @@ public class InMemoryHolidayServiceImpl implements HolidaysService{
 
     @Override
     public HolidayModel updateHoliday(HolidayModel holiday){
-        if(holidayRepository.existsById(holiday.getId())){
+        if (holidayRepository.existsById(holiday.getId())) {
             return holidayRepository.save(holiday);
-        }else {
-            return null;
         }
+        return null;
     }
 
     @Override
     public void deleteHoliday(UUID id){
-        if(holidayRepository.existsById(id)) holidayRepository.deleteById(id);
+        if (holidayRepository.existsById(id)) {
+            holidayRepository.deleteById(id);
+        }
     }
 
 }
