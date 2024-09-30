@@ -18,7 +18,6 @@ public class CarModel {
     private String Color;
     private String Model;
     private boolean IsExist;
-
     public CarModel(Long id, String brand, String color, String model, boolean isExist) {
         Id = id;
         Brand = brand;
@@ -26,48 +25,36 @@ public class CarModel {
         Model = model;
         IsExist = isExist;
     }
-
     public CarModel() {
 
     }
-
-
     public Long getId() {
         return Id;
     }
-
     public void setId(Long id) {
         Id = id;
     }
-
     public String getBrand() {
         return Brand;
     }
-
     public void setBrand(String brand) {
         Brand = brand;
     }
-
     public @Size(min = 1, message = "Color size error") String getColor() {
         return Color;
     }
-
     public void setColor(@Size(min = 1, message = "Color size error") String color) {
         Color = color;
     }
-
     public String getModel() {
         return Model;
     }
-
     public void setModel(String model) {
         Model = model;
     }
-
     public boolean isExist() {
         return IsExist;
     }
-
     public void setExist(boolean exist) {
         IsExist = exist;
     }

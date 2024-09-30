@@ -1,7 +1,9 @@
 package com.web_project.school.controllers;
 
+import com.web_project.school.model.PasportModel;
 import com.web_project.school.model.StudentModel;
 import com.web_project.school.service.StudentService;
+import com.web_project.school.service.UniversityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,16 +11,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
     public StudentService studentService;
+    public UniversityService universityService;
 
     @GetMapping("/all")
     public String getAllStudents(Model model) {
         model.addAttribute("students", studentService.findAllStudents());
         model.addAttribute("student", new StudentModel());
+        model.addAttribute("universities", universityService.findAllUniversitys());
         return "studentList";
     }
 
@@ -26,8 +32,11 @@ public class StudentController {
     public String addStudent(@Valid @ModelAttribute("student") StudentModel student, BindingResult result, Model model) {
         if (result.hasErrors()){
             model.addAttribute("students", studentService.findAllStudents());
+            model.addAttribute("universities", universityService.findAllUniversitys());
             return "studentList";
         }
+        PasportModel pasport = student.getPasport();
+        student.setPasport(pasport);
         studentService.addStudent(student);
         return "redirect:/students/all";
     }
@@ -39,15 +48,16 @@ public class StudentController {
     }
 
     @PostMapping("/delete")
-    public String deleteStudent(@RequestParam Long id) {
+    public String deleteStudent(@RequestParam UUID id) {
         studentService.deleteStudent(id);
         return "redirect:/students/all";
     }
 
     @GetMapping("/all/{id}")
-    public String getIdStudent(@PathVariable("id") Long id, Model model) {
+    public String getIdStudent(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("students", studentService.findStudentById(id));
         model.addAttribute("student", new StudentModel());
+        model.addAttribute("universities", universityService.findAllUniversitys());
         return "studentList";
     }
 

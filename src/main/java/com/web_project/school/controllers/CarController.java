@@ -16,19 +16,14 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/cars")
 public class CarController {
-
     @Autowired
     public CarService carService;
-
-
     @GetMapping("/all")
     public String getAllCars(Model model) {
         model.addAttribute("cars", carService.findAllCars());
         model.addAttribute("car", new CarModel());
-
         return "carList";
     }
-
     @PostMapping("/add")
     public String addCars(@Valid @ModelAttribute("car") CarModel car, BindingResult result, Model model) {
         if (result.hasErrors()){
@@ -38,24 +33,19 @@ public class CarController {
         carService.addCar(car);
         return "redirect:/cars/all";
     }
-
     @PostMapping("/update")
     public String updateCar(@Valid @ModelAttribute("car") CarModel car, BindingResult result) {
         carService.updateCar(car);
         return "redirect:/cars/all";
     }
-
     @PostMapping("/delete")
     public String deleteCar(@RequestParam Long id) {
         carService.deleteCar(id);
         return "redirect:/cars/all";
     }
-
-
     @PostMapping("/logic_delete")
     public String logicDeleteCar(@RequestParam Long id) {
         List<CarModel> cars = carService.findAllCars();
-
         for (CarModel car : cars) {
             if (Objects.equals(car.getId(), id)) {
                 car.setExist(true);
@@ -65,15 +55,12 @@ public class CarController {
         }
         return "redirect:/cars/all";
     }
-
     @GetMapping("/all/{id}")
     public String getIdCar(@PathVariable("id") Long id, Model model) {
         model.addAttribute("cars", carService.findCarById(id));
         model.addAttribute("car", new CarModel());
         return "carList";
     }
-
-
     @GetMapping("/search")
     public String searchGuest(@RequestParam(required = false) String brand,
                               @RequestParam(required = false) String modell,

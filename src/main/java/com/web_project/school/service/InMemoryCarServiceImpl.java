@@ -10,47 +10,39 @@ import java.util.logging.Filter;
 import java.util.stream.Collectors;
 
 @Service
-public class InMemoryCarServiceImpl implements CarService{
+public class InMemoryCarServiceImpl implements CarService {
     private final CarRepository carRepository;
 
     public InMemoryCarServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 
-
     @Override
-    public List<CarModel> findAllCars(){
+    public List<CarModel> findAllCars() {
         return (List<CarModel>) carRepository.findAll(Sort.by("id")).stream()
                 .filter(car -> !car.isExist())
                 .collect(Collectors.toList());
     }
+
     @Override
-    public CarModel addCar(CarModel car){
+    public CarModel addCar(CarModel car) {
         return carRepository.save(car);
     }
 
     @Override
-    public CarModel updateCar(CarModel car){
+    public CarModel updateCar(CarModel car) {
         return carRepository.save(car);
     }
 
-
-
-
     @Override
-    public void deleteCar(Long id){
-        if(carRepository.existsById(id)) carRepository.deleteById(id);
+    public void deleteCar(Long id) {
+        if (carRepository.existsById(id)) carRepository.deleteById(id);
     }
 
     @Override
-    public CarModel findCarById(Long id){
+    public CarModel findCarById(Long id) {
         return carRepository.findById(id).orElse(null);
     }
-
-//    @Override
-//    public void deleteLogicCar(Long id){
-//        carRepository.save(id);
-//    }
 
     @Override
     public List<CarModel> findCarsByBrandAndModel(String brand, String model) {

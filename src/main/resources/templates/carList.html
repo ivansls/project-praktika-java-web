@@ -13,17 +13,14 @@
     <div th:if="${#fields.hasErrors('Color')}" th:errors="*{Color}">
         name not < 1
     </div>
-    <!--    <input type="checkbox" name="IsExist" placeholder="IsExist">-->
     <button type="submit" formmethod="post">Добавить cars</button>
 </form>
-
 <h1>search:</h1>
 <form action="/cars/search" method="get">
     <input type="text" name="brand" placeholder="brand">
     <input type="text" name="modell" placeholder="modell">
     <button type="submit" formmethod="get">Поиск</button>
 </form>
-
 <h2>Все cars: </h2>
 <ul>
     <th:block th:each="car : ${cars}">
