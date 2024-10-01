@@ -26,6 +26,7 @@ public class HolidayController {
         model.addAttribute("holidays", holidayService.findAllHolidays());
         model.addAttribute("holiday", new HolidayModel());
         model.addAttribute("students", studentService.findAllStudents());
+
         return "holidayList";
     }
 

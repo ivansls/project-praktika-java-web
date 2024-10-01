@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список студентов</title>
+</head>
+<body>
+<h1>Список book</h1>
+<form action="/books/add" method="post" th:object="${book}">
+    <input type="text" name="Title" placeholder="Title" th:field="*{Title}" required>
+    <input type="text" name="PublicationYear" placeholder="PublicationYear" th:field="*{PublicationYear}">
+    <div>
+        <label for="university">Author: </label>
+        <select id="university" th:field="*{author}">
+            <option th:each="author : ${authors}" th:value="${author.id}"
+                    th:text="${author.AuthorName}"></option>
+        </select>
+    </div>
+    <input type="text" name="passport.series" placeholder="Серия паспорта" th:field="*{passport.series}" required>
+    <input type="text" name="passport.number" placeholder="Номер паспорта" th:field="*{passport.number}" required>
+    <button type="submit" formmethod="post">Добавить студента</button>
+</form>
+
+<h2>Все студенты: </h2>
+<ul>
+    <th:block th:each="student : ${students}">
+        <li>
+            <span th:text="${student.name} + ' ' + ${student.firstName} + ' ' + ${student.lastName} + ' ' + ${student.corpEmail}"></span>
+            <form action="/students/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${student.id}">
+                <input type="text" name="name" th:value="${student.name}" placeholder="Имя" required>
+                <input type="text" name="firstName" th:value="${student.firstName}" placeholder="Фамилия" required>
+                <input type="text" name="lastName" th:value="${student.lastName}" placeholder="Отчество">
+                <input type="text" name="corpEmail" th:value="${student.corpEmail}" placeholder="Емеил">
+                <input type="text" name="passport.series" th:value="${student.passport.series}" placeholder="Серия паспорта">
+                <input type="text" name="passport.number" th:value="${student.passport.number}" placeholder="Номер паспорта">
+                <button type="submit" formmethod="post">Обновить</button>
+            </form>
+            <form action="/students/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${student.id}">
+                <button type="submit" formmethod="post">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
