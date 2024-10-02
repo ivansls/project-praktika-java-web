@@ -30,7 +30,7 @@ public class MusicController {
     }
 
     @PostMapping("/add")
-    public String addMusic(@Valid @ModelAttribute("student") MusicModel music, BindingResult result, Model model) {
+    public String addMusic(@Valid @ModelAttribute("music") MusicModel music, BindingResult result, Model model) {
         if(result.hasErrors()){
             model.addAttribute("musics", musicService.findAllMusic());
             return "musicList";
@@ -41,7 +41,7 @@ public class MusicController {
     }
 
     @PostMapping("/update")
-    public String updateMusic(@Valid @ModelAttribute("student") MusicModel music, BindingResult result) {
+    public String updateMusic(@Valid @ModelAttribute("music") MusicModel music, BindingResult result) {
         musicService.updateMusic(music);
         return "redirect:/musics/all";
     }

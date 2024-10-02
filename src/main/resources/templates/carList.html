@@ -11,7 +11,7 @@
     <input type="text" name="Model" placeholder="Model" th:field="*{Model}">
     <input type="text" name="Color" placeholder="Color" th:field="*{Color}">
     <div th:if="${#fields.hasErrors('Color')}" th:errors="*{Color}">
-        name not < 1
+        Color size error
     </div>
     <!--    <input type="checkbox" name="IsExist" placeholder="IsExist">-->
     <button type="submit" formmethod="post">Добавить cars</button>

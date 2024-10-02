@@ -33,7 +33,7 @@ public class CarController {
     public String addCars(@Valid @ModelAttribute("car") CarModel car, BindingResult result, Model model) {
         if (result.hasErrors()){
             model.addAttribute("cars", carService.findAllCars());
-            return "studentList";
+            return "carList";
         }
         carService.addCar(car);
         return "redirect:/cars/all";

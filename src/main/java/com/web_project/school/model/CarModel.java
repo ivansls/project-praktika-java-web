@@ -14,7 +14,7 @@ public class CarModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String Brand;
-    @Size(min = 1, message = "Color size error")
+    @Size(min = 3, message = "Color size error")
     private String Color;
     private String Model;
     private boolean IsExist;
@@ -48,11 +48,11 @@ public class CarModel {
         Brand = brand;
     }
 
-    public @Size(min = 1, message = "Color size error") String getColor() {
+    public @Size(min = 3, message = "Color size error") String getColor() {
         return Color;
     }
 
-    public void setColor(@Size(min = 1, message = "Color size error") String color) {
+    public void setColor(@Size(min = 3, message = "Color size error") String color) {
         Color = color;
     }
 
