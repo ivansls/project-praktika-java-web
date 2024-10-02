@@ -7,58 +7,55 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "location")
+@Table(name = "locations")
 public class LocationModel {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue
-    private UUID Id;
-    private String Shelf;
-    private String RowNumber;
-
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_Id")
-    private BookModel book;
-
+    private UUID id;
+    private String shelf;
+    private String rowNumber;
+    @OneToOne(optional = false, mappedBy = "location")
+    private BookModel owner;
 
     public LocationModel() {
     }
 
-    public LocationModel(UUID id, String shelf, String rowNumber, BookModel book) {
-        Id = id;
-        Shelf = shelf;
-        RowNumber = rowNumber;
-        this.book = book;
+    public LocationModel(UUID id, String shelf, String rowNumber, BookModel owner) {
+        this.id = id;
+        this.shelf = shelf;
+        this.rowNumber = rowNumber;
+        this.owner = owner;
     }
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getShelf() {
-        return Shelf;
+        return shelf;
     }
 
     public void setShelf(String shelf) {
-        Shelf = shelf;
+        this.shelf = shelf;
     }
 
     public String getRowNumber() {
-        return RowNumber;
+        return rowNumber;
     }
 
     public void setRowNumber(String rowNumber) {
-        RowNumber = rowNumber;
+        this.rowNumber = rowNumber;
     }
 
-    public BookModel getBook() {
-        return book;
+    public BookModel getOwner() {
+        return owner;
     }
 
-    public void setBook(BookModel book) {
-        this.book = book;
+    public void setOwner(BookModel owner) {
+        this.owner = owner;
     }
 }

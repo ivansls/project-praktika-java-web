@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>$Title$</title>
+</head>
+<body>
+<form action="/authors/add" method="post" th:object="${author}">
+  <input type="text" name="AuthorName" placeholder="AuthorName" th:field="*{AuthorName}" required>
+  <button type="submit" formmethod="post">Добавить AuthorName</button>
+</form>
+</body>
+</html>

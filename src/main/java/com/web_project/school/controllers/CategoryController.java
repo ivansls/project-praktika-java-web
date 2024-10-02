@@ -34,7 +34,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public String addHoliday(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result, Model model) {
+    public String addCategory(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAllCategory());
             model.addAttribute("books", bookService.findAllBook());
@@ -45,7 +45,7 @@ public class CategoryController {
     }
 
     @PostMapping("/update")
-    public String updateHoliday(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result) {
+    public String updateCategory(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result) {
         categoryService.updateCategory(category);
         return "redirect:/categories/all";
     }
@@ -57,7 +57,7 @@ public class CategoryController {
     }
 
     @GetMapping("/all/{id}")
-    public String getIdHoliday(@PathVariable("id") UUID id, Model model) {
+    public String deleteCategory(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("categories", categoryService.findCategoryById(id));
         model.addAttribute("category", new CategoryModel());
         model.addAttribute("books", bookService.findAllBook());

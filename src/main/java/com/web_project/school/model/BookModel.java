@@ -8,78 +8,72 @@ import java.util.UUID;
 @Entity
 @Table(name = "books")
 public class BookModel {
-
     @Id
     @GeneratedValue
-    private UUID Id;
-    private String Title;
-    private String PublicationYear;
-
-    @OneToOne(optional = false, mappedBy = "book")
-    private LocationModel owner;
-
+    private UUID id;
+    private String title;
+    private String publicationYear;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id")
+    private LocationModel location;
     @ManyToOne
-    @JoinColumn(name = "author_Id")
+    @JoinColumn(name = "authors_id")
     private AuthorModel authors;
-
-
     @ManyToMany
     @JoinTable(name = "book_category",
-            joinColumns = @JoinColumn(name = "book_Id"),
-            inverseJoinColumns = @JoinColumn(name = "category_Id"))
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<CategoryModel> categories;
-
 
     public BookModel() {
     }
 
-    public BookModel(UUID id, String title, String publicationYear, LocationModel owner, AuthorModel authors, List<CategoryModel> categories) {
-        Id = id;
-        Title = title;
-        PublicationYear = publicationYear;
-        this.owner = owner;
+    public BookModel(UUID id, String title, String publicationYear, LocationModel location, AuthorModel authors, List<CategoryModel> categories) {
+        this.id = id;
+        this.title = title;
+        this.publicationYear = publicationYear;
+        this.location = location;
         this.authors = authors;
         this.categories = categories;
     }
 
-
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getPublicationYear() {
-        return PublicationYear;
+        return publicationYear;
     }
 
     public void setPublicationYear(String publicationYear) {
-        PublicationYear = publicationYear;
+        this.publicationYear = publicationYear;
     }
 
-    public LocationModel getOwner() {
-        return owner;
+    public LocationModel getLocation() {
+        return location;
     }
 
-    public void setOwner(LocationModel owner) {
-        this.owner = owner;
+    public void setLocation(LocationModel location) {
+        this.location = location;
     }
 
-    public AuthorModel getAuthor() {
+    public AuthorModel getAuthors() {
         return authors;
     }
 
-    public void setAuthor(AuthorModel authors) {
+    public void setAuthors(AuthorModel authors) {
         this.authors = authors;
     }
 

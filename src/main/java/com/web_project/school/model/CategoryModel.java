@@ -10,39 +10,37 @@ import java.util.UUID;
 public class CategoryModel {
     @Id
     @GeneratedValue
-    private UUID Id;
-    private String CategoryName;
-
+    private UUID id;
+    private String categoryName;
     @ManyToMany
     @JoinTable(name = "book_category",
-            joinColumns = @JoinColumn(name = "category_Id"),
-            inverseJoinColumns = @JoinColumn(name = "book_Id"))
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<BookModel> books;
-
 
     public CategoryModel() {
     }
 
     public CategoryModel(UUID id, String categoryName, List<BookModel> books) {
-        Id = id;
-        CategoryName = categoryName;
+        this.id = id;
+        this.categoryName = categoryName;
         this.books = books;
     }
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
     public void setCategoryName(String categoryName) {
-        CategoryName = categoryName;
+        this.categoryName = categoryName;
     }
 
     public List<BookModel> getBooks() {

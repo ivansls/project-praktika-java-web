@@ -19,7 +19,7 @@ public class InMemoryBookServiceImpl implements BookService{
 
     @Override
     public List<BookModel> findAllBook(){
-        return bookRepository.findAll(Sort.by("id"));
+        return bookRepository.findAll(Sort.by("Id"));
     }
 
     @Override

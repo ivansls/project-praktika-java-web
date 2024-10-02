@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/locations/add" method="post" th:object="${location}">
+  <input type="text" name="shelf" placeholder="shelf" th:field="*{shelf}" required>
+  <input type="text" name="rowNumber" placeholder="rowNumber" th:field="*{rowNumber}" required>
+  <div>
+    <label for="book">Университет: </label>
+    <select id="book" th:field="*{book}">
+      <option th:each="university : ${universities}" th:value="${university.id}"
+              th:text="${university.name}"></option>
+    </select>
+  </div>
+  <button type="submit" formmethod="post">Добавить студента</button>
+</form>
+
+
+<h2>Все студенты: </h2>
+<ul>
+  <th:block th:each="student : ${students}">
+    <li>
+      <span th:text="${student.name} + ' ' + ${student.firstName} + ' ' + ${student.lastName} + ' ' + ${student.corpEmail}"></span>
+      <form action="/students/update" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${student.id}">
+        <input type="text" name="name" th:value="${student.name}" placeholder="Имя" required>
+        <input type="text" name="firstName" th:value="${student.firstName}" placeholder="Фамилия" required>
+        <input type="text" name="lastName" th:value="${student.lastName}" placeholder="Отчество">
+        <input type="text" name="corpEmail" th:value="${student.corpEmail}" placeholder="Емеил">
+        <input type="text" name="passport.series" th:value="${student.passport.series}" placeholder="Серия паспорта">
+        <input type="text" name="passport.number" th:value="${student.passport.number}" placeholder="Номер паспорта">
+        <button type="submit" formmethod="post">Обновить</button>
+      </form>
+      <form action="/students/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${student.id}">
+        <button type="submit" formmethod="post">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+</body>
+</html>

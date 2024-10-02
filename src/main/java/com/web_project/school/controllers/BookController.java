@@ -2,6 +2,7 @@ package com.web_project.school.controllers;
 
 import com.web_project.school.model.AuthorModel;
 import com.web_project.school.model.BookModel;
+import com.web_project.school.model.LocationModel;
 import com.web_project.school.service.AuthorService;
 import com.web_project.school.service.BookService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class BookController {
     public String getAllBooks(Model model) {
         model.addAttribute("books", bookService.findAllBook());
         model.addAttribute("book", new BookModel());
-        model.addAttribute("author", authorService.findAllAuthor());
+        model.addAttribute("authors", authorService.findAllAuthor());
         return "bookList";
     }
 
@@ -34,11 +35,14 @@ public class BookController {
     public String addBooks(@Valid @ModelAttribute("book") BookModel book, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("books", bookService.findAllBook());
-            model.addAttribute("author", authorService.findAllAuthor());
+            model.addAttribute("authors", authorService.findAllAuthor());
             return "bookList";
         }
-        AuthorModel author = book.getAuthor();
-        book.setAuthor(author);
+//        AuthorModel author = book.getAuthors();
+//        book.setAuthors(author);
+
+        LocationModel location = book.getLocation();
+        book.setLocation(location);
         bookService.addBook(book);
         return "redirect:/books/all";
     }
@@ -59,7 +63,7 @@ public class BookController {
     public String getIdBooks(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("books", bookService.findBookById(id));
         model.addAttribute("book", new BookModel());
-        model.addAttribute("author", authorService.findAllAuthor());
+        model.addAttribute("authors", authorService.findAllAuthor());
         return "bookList";
     }
 

@@ -10,34 +10,33 @@
     <input type="text" name="Title" placeholder="Title" th:field="*{Title}" required>
     <input type="text" name="PublicationYear" placeholder="PublicationYear" th:field="*{PublicationYear}">
     <div>
-        <label for="university">Author: </label>
-        <select id="university" th:field="*{author}">
+        <label for="authors">Author: </label>
+        <select id="authors" th:field="*{authors}">
             <option th:each="author : ${authors}" th:value="${author.id}"
                     th:text="${author.AuthorName}"></option>
         </select>
     </div>
-    <input type="text" name="passport.series" placeholder="Серия паспорта" th:field="*{passport.series}" required>
-    <input type="text" name="passport.number" placeholder="Номер паспорта" th:field="*{passport.number}" required>
-    <button type="submit" formmethod="post">Добавить студента</button>
+
+    <input type="text" name="location.shelf" placeholder="shelf" th:field="*{location.shelf}" required>
+    <input type="text" name="location.rowNumber" placeholder="rowNumber" th:field="*{location.rowNumber}" required>
+    <button type="submit" formmethod="post">Добавить book</button>
 </form>
 
 <h2>Все студенты: </h2>
 <ul>
-    <th:block th:each="student : ${students}">
+    <th:block th:each="book : ${books}">
         <li>
-            <span th:text="${student.name} + ' ' + ${student.firstName} + ' ' + ${student.lastName} + ' ' + ${student.corpEmail}"></span>
-            <form action="/students/update" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${student.id}">
-                <input type="text" name="name" th:value="${student.name}" placeholder="Имя" required>
-                <input type="text" name="firstName" th:value="${student.firstName}" placeholder="Фамилия" required>
-                <input type="text" name="lastName" th:value="${student.lastName}" placeholder="Отчество">
-                <input type="text" name="corpEmail" th:value="${student.corpEmail}" placeholder="Емеил">
-                <input type="text" name="passport.series" th:value="${student.passport.series}" placeholder="Серия паспорта">
-                <input type="text" name="passport.number" th:value="${student.passport.number}" placeholder="Номер паспорта">
+            <span th:text="${book.Title} + ' ' + ${book.PublicationYear}"></span>
+            <form action="/books/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${book.id}">
+                <input type="text" name="Title" th:value="${book.Title}" placeholder="Title" required>
+                <input type="text" name="PublicationYear" th:value="${book.PublicationYear}" placeholder="PublicationYear" required>
+                <input type="text" name="location.shelf" th:value="${book.location.shelf}" placeholder="Серия паспорта">
+                <input type="text" name="location.rowNumber" th:value="${book.location.rowNumber}" placeholder="Номер паспорта">
                 <button type="submit" formmethod="post">Обновить</button>
             </form>
-            <form action="/students/delete" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${student.id}">
+            <form action="/books/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${book.id}">
                 <button type="submit" formmethod="post">Удалить</button>
             </form>
         </li>
