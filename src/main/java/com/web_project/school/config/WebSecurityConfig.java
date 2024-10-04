@@ -1,6 +1,5 @@
 package com.web_project.school.config;
 
-
 import com.web_project.school.model.RoleEnum;
 import com.web_project.school.model.UserModel;
 import com.web_project.school.repository.UserRepository;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,18 +30,16 @@ public class WebSecurityConfig {
     }
 
     @PostConstruct
-    public void createDefaultUsers() {
+    public void createDefaultUser(){
         if (!userRepository.existsByUsername("admin")) {
             UserModel user = new UserModel();
             user.setUsername("admin");
             user.setPassword(passwordEncoder.encode("Qwerty_123"));
             user.setActive(true);
-            user.setRole(Collections.singleton(RoleEnum.ADMIN).toString());
+            user.setRoles(Collections.singleton(RoleEnum.ADMIN));
             userRepository.save(user);
-
         }
     }
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,8 +49,7 @@ public class WebSecurityConfig {
                         throw new UsernameNotFoundException("Такой пользователь не существует!");
                     }
                     return new org.springframework.security.core.userdetails.User(
-                            user
-                                    .getUsername(),
+                            user.getUsername(),
                             user.getPassword(),
                             user.isActive(),
                             true,
@@ -65,7 +60,6 @@ public class WebSecurityConfig {
                 }
         ).passwordEncoder(passwordEncoder);
     }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -81,7 +75,3 @@ public class WebSecurityConfig {
 
     }
 }
-
-
-
-

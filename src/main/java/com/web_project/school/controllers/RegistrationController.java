@@ -1,6 +1,5 @@
 package com.web_project.school.controllers;
 
-
 import com.web_project.school.model.RoleEnum;
 import com.web_project.school.model.UserModel;
 import com.web_project.school.repository.UserRepository;
@@ -22,20 +21,21 @@ public class RegistrationController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
-    public String registrationView() {
+    public String registrationView(){
         return "regis";
     }
 
     @PostMapping("/registration")
-    public String registrationUser(UserModel user, Model model) {
-        if(userRepository.existsByUsername(user.getUsername())){
-            model.addAttribute("message", "user already exists");
+    public String registrationUser(UserModel user, Model model){
+        if (userRepository.existsByUsername(user.getUsername())){
+            model.addAttribute("message", "Пользователь уже существует");
             return "regis";
         }
         user.setActive(true);
-        user.setRole(Collections.singleton(RoleEnum.USER).toString());
+        user.setRoles(Collections.singleton(RoleEnum.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
     }
+
 }

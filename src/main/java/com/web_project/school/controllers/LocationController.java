@@ -22,11 +22,8 @@ import java.util.UUID;
 public class LocationController {
     @Autowired
     public LocationService locationService;
-
     @Autowired
     public BookService bookService;
-
-
     @GetMapping("/all")
     public String getAllLocation(Model model) {
         model.addAttribute("locations", locationService.findAllLocation());
@@ -34,7 +31,6 @@ public class LocationController {
         model.addAttribute("books", bookService.findAllBook());
         return "locationList";
     }
-
     @PostMapping("/add")
     public String addLocation(@Valid @ModelAttribute("location") LocationModel location, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -42,23 +38,19 @@ public class LocationController {
             model.addAttribute("books", bookService.findAllBook());
             return "locationList";
         }
-
         locationService.addLocation(location);
         return "redirect:/locations/all";
     }
-
     @PostMapping("/update")
     public String updateLocation(@Valid @ModelAttribute("location") LocationModel location, BindingResult result) {
         locationService.updateLocation(location);
         return "redirect:/locations/all";
     }
-
     @PostMapping("/delete")
     public String deleteLocation(@RequestParam UUID id) {
         locationService.deleteLocation(id);
         return "redirect:/locations/all";
     }
-
     @GetMapping("/all/{id}")
     public String getIdLocation(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("locations", locationService.findLocationById(id));

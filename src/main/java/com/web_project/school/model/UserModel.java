@@ -9,9 +9,9 @@ public class UserModel {
     @Id
     @GeneratedValue
     private Long idUser;
+
     private String username;
     private String password;
-    private String role;
     private boolean active;
 
     @ElementCollection(targetClass = RoleEnum.class, fetch = FetchType.EAGER)
@@ -19,13 +19,13 @@ public class UserModel {
     @Enumerated(EnumType.STRING)
     private Set<RoleEnum> roles;
 
-    public UserModel() {}
+    public UserModel() {
 
-    public UserModel(Long idUser, String username, String password, String role, boolean active, Set<RoleEnum> roles) {
-        this.idUser = idUser;
+    }
+
+    public UserModel(String username, String password, boolean active, Set<RoleEnum> roles) {
         this.username = username;
         this.password = password;
-        this.role = role;
         this.active = active;
         this.roles = roles;
     }
@@ -52,14 +52,6 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public boolean isActive() {

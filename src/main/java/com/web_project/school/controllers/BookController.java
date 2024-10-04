@@ -19,10 +19,8 @@ import java.util.UUID;
 public class BookController {
     @Autowired
     public BookService bookService;
-
     @Autowired
     public AuthorService authorService;
-
     @GetMapping("/all")
     public String getAllBooks(Model model) {
         model.addAttribute("books", bookService.findAllBook());
@@ -30,7 +28,6 @@ public class BookController {
         model.addAttribute("authors", authorService.findAllAuthor());
         return "bookList";
     }
-
     @PostMapping("/add")
     public String addBooks(@Valid @ModelAttribute("book") BookModel book, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -38,27 +35,21 @@ public class BookController {
             model.addAttribute("authors", authorService.findAllAuthor());
             return "bookList";
         }
-//        AuthorModel author = book.getAuthors();
-//        book.setAuthors(author);
-
         LocationModel location = book.getLocation();
         book.setLocation(location);
         bookService.addBook(book);
         return "redirect:/books/all";
     }
-
     @PostMapping("/update")
     public String updateBooks(@Valid @ModelAttribute("book") BookModel book, BindingResult result) {
         bookService.updateBook(book);
         return "redirect:/books/all";
     }
-
     @PostMapping("/delete")
     public String deleteBooks(@RequestParam UUID id) {
         bookService.deleteBook(id);
         return "redirect:/books/all";
     }
-
     @GetMapping("/all/{id}")
     public String getIdBooks(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("books", bookService.findBookById(id));

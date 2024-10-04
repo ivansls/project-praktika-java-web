@@ -20,19 +20,15 @@ import java.util.UUID;
 public class CategoryController {
     @Autowired
     public CategoryService categoryService;
-
     @Autowired
     public BookService bookService;
-
     @GetMapping("/all")
     public String getAllCategories(Model model) {
         model.addAttribute("categories", categoryService.findAllCategory());
         model.addAttribute("category", new CategoryModel());
         model.addAttribute("books", bookService.findAllBook());
-
         return "categoryList";
     }
-
     @PostMapping("/add")
     public String addCategory(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -43,19 +39,16 @@ public class CategoryController {
         categoryService.addCategory(category);
         return "redirect:/categories/all";
     }
-
     @PostMapping("/update")
     public String updateCategory(@Valid @ModelAttribute("category") CategoryModel category, BindingResult result) {
         categoryService.updateCategory(category);
         return "redirect:/categories/all";
     }
-
     @PostMapping("/delete")
     public String deleteHoliday(@RequestParam UUID id) {
         categoryService.deleteCategory(id);
         return "redirect:/categories/all";
     }
-
     @GetMapping("/all/{id}")
     public String deleteCategory(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("categories", categoryService.findCategoryById(id));
