@@ -5,6 +5,7 @@
   <title>Список мероприятий</title>
 </head>
 <body>
+<div th:insert="blocks/header_user"></div>
 <h1>Список мероприятий</h1>
 <form action="/holidays/add" method="post" th:object="${holiday}">
   <input type="text" name="name" placeholder="Название" th:field="*{name}" required>

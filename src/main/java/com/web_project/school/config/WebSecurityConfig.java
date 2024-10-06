@@ -23,12 +23,10 @@ import java.util.Collections;
 public class WebSecurityConfig {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     public WebSecurityConfig(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
     @PostConstruct
     public void createDefaultUser(){
         if (!userRepository.existsByUsername("admin")) {
@@ -40,7 +38,6 @@ public class WebSecurityConfig {
             userRepository.save(user);
         }
     }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(username -> {
@@ -60,13 +57,12 @@ public class WebSecurityConfig {
                 }
         ).passwordEncoder(passwordEncoder);
     }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize ->
                         authorize.requestMatchers("/login", "/registration").permitAll()
                                 .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/students/all").permitAll())
+                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/books/all").permitAll())
                 .logout(logout -> logout.permitAll())
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable());

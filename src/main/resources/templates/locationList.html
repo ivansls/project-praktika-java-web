@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<div th:insert="blocks/header_user"></div>
 <form action="/locations/add" method="post" th:object="${location}">
   <input type="text" name="shelf" placeholder="shelf" th:field="*{shelf}" required>
   <input type="text" name="rowNumber" placeholder="rowNumber" th:field="*{rowNumber}" required>

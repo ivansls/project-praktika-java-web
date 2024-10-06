@@ -6,6 +6,7 @@ import com.web_project.school.service.AuthorService;
 import com.web_project.school.service.UniversityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/authors")
+@PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
 public class AuthorController {
     @Autowired
     public AuthorService authorService;

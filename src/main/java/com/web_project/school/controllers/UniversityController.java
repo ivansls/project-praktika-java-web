@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/universities")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+@PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
 public class UniversityController {
     @Autowired
     public UniversityService universityService;

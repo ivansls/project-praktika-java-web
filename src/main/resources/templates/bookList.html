@@ -5,6 +5,7 @@
     <title>Список студентов</title>
 </head>
 <body>
+<div th:insert="blocks/header_user"></div>
 <h1>Список book</h1>
 <form action="/books/add" method="post" th:object="${book}">
     <input type="text" name="Title" placeholder="Title" th:field="*{Title}" required>

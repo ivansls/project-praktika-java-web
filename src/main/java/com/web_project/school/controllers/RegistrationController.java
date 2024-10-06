@@ -31,6 +31,17 @@ public class RegistrationController {
             model.addAttribute("message", "Пользователь уже существует");
             return "regis";
         }
+
+        if (user.getPassword() == null || user.getPassword().length() < 8) {
+            model.addAttribute("message", "Пароль должен содержать не менее 8 символов");
+            return "regis";
+        }
+
+
+        if (!user.getPassword().matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!]).*$")) {
+            model.addAttribute("message", "Пароль должен содержать хотя бы одну букву, одну цифру и один специальный символ (@#$%^&+=!)");
+            return "regis";
+        }
         user.setActive(true);
         user.setRoles(Collections.singleton(RoleEnum.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
