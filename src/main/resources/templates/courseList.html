@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course</title>
+</head>
+<body>
+<h1>Список курсов</h1>
+<form action="/courses/add" method="post" th:object="${course}">
+  <input type="text" name="name" placeholder="name" th:field="*{name}" required>
+  <input type="text" name="description" placeholder="description" th:field="*{description}" required>
+
+
+
+  <div>
+    <label for="teacher">Преподаватели: </label>
+    <select id="teacher" th:field="*{teacher}">
+      <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.username}"></option>
+    </select>
+  </div>
+  <button type="submit" formmethod="post">Добавить course</button>
+</form>
+
+<h2>Все студенты: </h2>
+<ul>
+  <th:block th:each="course : ${courses}">
+    <li>
+      <span th:text="${course.name} + ' ' + ${course.firstName} + ' ' + ${course.lastName} + ' ' + ${course.corpEmail}"></span>
+      <form action="/courses/update" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${course.id}">
+        <input type="text" name="name" th:value="${course.name}" placeholder="Имя" required>
+        <input type="text" name="description" th:value="${course.description}" placeholder="description" required>
+
+
+        <button type="submit" formmethod="post">Обновить</button>
+      </form>
+      <form action="/courses/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${course.id}">
+        <button type="submit" formmethod="post">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+</body>
+</html>

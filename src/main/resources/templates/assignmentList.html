@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assigment</title>
+</head>
+<body>
+<h1>Список заданий</h1>
+<form action="/assignments/add" method="post" th:object="${assignment}">
+    <input type="text" name="name" placeholder="name" th:field="*{name}" required>
+    <input type="text" name="description" placeholder="description" th:field="*{description}" required>
+
+
+    <input type="text" name="finishDate" placeholder="finishDate" th:field="*{finishDate}">
+    
+    
+    <div>
+        <label for="course">courses: </label>
+        <select id="course" th:field="*{course}">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+        </select>
+    </div>
+    <button type="submit" formmethod="post">Добавить assignment</button>
+</form>
+
+<h2>Все студенты: </h2>
+<ul>
+    <th:block th:each="assignment : ${assignments}">
+        <li>
+            <span th:text="${assignment.name} + ' ' + ${assignment.description} + ' ' + ${assignment.finishDate}"></span>
+            <form action="/assignments/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${assignment.id}">
+                <input type="text" name="name" th:value="${assignment.name}" placeholder="Имя" required>
+                <input type="text" name="description" th:value="${assignment.description}" placeholder="description" required>
+                <input type="text" name="finishDate" th:value="${assignment.finishDate}" placeholder="finishDate">
+
+
+                <button type="submit" formmethod="post">Обновить</button>
+            </form>
+            <form action="/assignments/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${assignment.id}">
+                <button type="submit" formmethod="post">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>

@@ -2,9 +2,9 @@ spring:
   config:
     name: school
   datasource:
-    url: jdbc:postgresql://localhost:5432/schooldb
+    url: jdbc:postgresql://localhost:5432/individualproject
     username: postgres
-    password: 1233
+    password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
