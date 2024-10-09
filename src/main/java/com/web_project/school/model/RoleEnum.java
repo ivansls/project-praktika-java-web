@@ -1,4 +1,4 @@
-package com.web_project.school.model;//package com.individual_project.individual_project.model;
+package com.web_project.school.model;//package com.web_project.school.model;
 //
 //import org.springframework.security.core.GrantedAuthority;
 //

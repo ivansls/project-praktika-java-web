@@ -1,6 +1,6 @@
 package com.web_project.school.service;
 
-import com.individual_project.individual_project.model.ScheduleModule;
+import com.web_project.school.model.ScheduleModule;
 
 import java.util.List;
 import java.util.UUID;

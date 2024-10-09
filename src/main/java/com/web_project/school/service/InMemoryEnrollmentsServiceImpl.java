@@ -1,7 +1,7 @@
 package com.web_project.school.service;
 
-import com.individual_project.individual_project.model.EnrollmentsModel;
-import com.individual_project.individual_project.repository.EnrollmentsRepository;
+import com.web_project.school.model.EnrollmentsModel;
+import com.web_project.school.repository.EnrollmentsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.web_project.school.service;
 
-import com.individual_project.individual_project.model.GradesModel;
-import com.individual_project.individual_project.repository.GradesRepository;
+import com.web_project.school.model.GradesModel;
+import com.web_project.school.repository.GradesRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 

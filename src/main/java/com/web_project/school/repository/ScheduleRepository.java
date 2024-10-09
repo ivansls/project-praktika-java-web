@@ -1,6 +1,6 @@
 package com.web_project.school.repository;
 
-import com.individual_project.individual_project.model.ScheduleModule;
+import com.web_project.school.model.ScheduleModule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

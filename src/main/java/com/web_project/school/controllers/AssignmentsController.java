@@ -1,9 +1,9 @@
 package com.web_project.school.controllers;
 
 
-import com.individual_project.individual_project.model.AssignmentsModel;
-import com.individual_project.individual_project.service.AssignmentsService;
-import com.individual_project.individual_project.service.CoursesService;
+import com.web_project.school.model.AssignmentsModel;
+import com.web_project.school.service.AssignmentsService;
+import com.web_project.school.service.CoursesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

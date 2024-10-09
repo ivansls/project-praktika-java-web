@@ -1,7 +1,7 @@
 package com.web_project.school.service;
 
-import com.individual_project.individual_project.model.ScheduleModule;
-import com.individual_project.individual_project.repository.ScheduleRepository;
+import com.web_project.school.model.ScheduleModule;
+import com.web_project.school.repository.ScheduleRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
