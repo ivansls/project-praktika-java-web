@@ -1,5 +1,6 @@
 package com.web_project.school.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -10,13 +11,16 @@ public class ProfileModel {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private UsersModel user;
-
     private String phoneNumber;
     private String address;
+
+
+    @Nullable
+    @OneToOne(optional = false, mappedBy = "profile")
+    private UsersModel user;
+
+    public ProfileModel() {}
+
 
     public ProfileModel(UsersModel user, String phoneNumber, String address) {
         this.user = user;

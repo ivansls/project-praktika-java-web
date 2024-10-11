@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+    <style>
+        .group {
+        width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+        .group_add {
+         width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .input_add {
+
+        }
+    </style>
+</head>
+<body>
+
+<div th:insert="blocks/header"></div>
+
+<ul class="group">
+
+
+    <div class="text-center" style="width: 20em; margin: 20px;">
+        <form method="post">
+            <div class="card mb-3 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal" th:text="${user_object.username}"></h4>
+                </div>
+                <div class="card-body">
+                    <!--          <h1 class="card-title pricing-card-title" th:text="${course.name}"></h1>-->
+                    <ul class="list-unstyled mt-3 mb-4">
+
+                        <input type="text" th:value="${user_object.username}" name="username">
+                        <li>
+                            <div style="margin-top: 10px;" th:each="role : ${roles}">
+                                <input type="checkbox" th:id="${role}"
+                                       th:name="${'roles[]'}" th:value="${role}"
+                                       th:checked="${#lists.contains(user_object.roles, role)}">
+                                <label th:text="${role}"></label>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                    <button class="btn btn-success" type="submit">сохранить</button>
+                    <a th:href="'/admin/users/' + ${user_object.id}" class="btn btn-warning">Назад</a>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</ul>
+</body>
+</html>

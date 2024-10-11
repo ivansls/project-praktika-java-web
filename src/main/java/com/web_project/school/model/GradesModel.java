@@ -28,6 +28,7 @@ public class GradesModel {
     @JoinColumn(name = "student_id")
     private UsersModel student;
 
+    public GradesModel() {}
 
     public GradesModel(int grade, String comment, AssignmentsModel assignment, UsersModel student) {
         this.grade = grade;

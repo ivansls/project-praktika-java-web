@@ -1,47 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Assigment</title>
+    <style>
+        .group {
+        width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+        .group_add {
+         width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .input_add {
+
+        }
+    </style>
 </head>
 <body>
-<h1>Список заданий</h1>
-<form action="/assignments/add" method="post" th:object="${assignment}">
-    <input type="text" name="name" placeholder="name" th:field="*{name}" required>
-    <input type="text" name="description" placeholder="description" th:field="*{description}" required>
+<div th:insert="blocks/header"></div>
 
 
-    <input type="text" name="finishDate" placeholder="finishDate" th:field="*{finishDate}">
-    
-    
-    <div>
-        <label for="course">courses: </label>
-        <select id="course" th:field="*{course}">
+<form style="margin:10px;" sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" action="/assignments/add" method="post"
+      th:object="${assignment}">
+    <h2 style="width: 350px;margin-left: auto;margin-right: auto;text-align: center;">добавление заданий</h2>
+    <div class="group_add">
+        <input class="form-control input_add" style="width: 300px; margin-left:10px;margin-right:10px;" type="text" name="name"
+               placeholder="name" th:field="*{name}" required>
+        <input class="form-control input_add" style="width: 300px; margin-left:10px;margin-right:10px;" type="text" name="description"
+               placeholder="description" th:field="*{description}" required>
+        <input class="form-control input_add" style="width: 300px; margin-left:10px;margin-right:10px;" type="text" name="finishDate"
+               placeholder="finishDate" th:field="*{finishDate}">
+
+
+        <select style="width:200px" class="form-select" aria-label="Default select example" id="course" th:field="*{course}">
+
             <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+
         </select>
+        <button type="submit" formmethod="post" class="btn btn-warning text-white"
+                style="background-color: #4f2f2f; margin-left:10px;border-color: #4f2f2f">Добавить</button>
     </div>
-    <button type="submit" formmethod="post">Добавить assignment</button>
+
 </form>
 
-<h2>Все студенты: </h2>
-<ul>
+<h2 style="width: 250px;
+  margin-left: auto;
+  margin-right: auto;text-align: center;">список заданий </h2>
+<ul class="group">
+
     <th:block th:each="assignment : ${assignments}">
-        <li>
-            <span th:text="${assignment.name} + ' ' + ${assignment.description} + ' ' + ${assignment.finishDate}"></span>
-            <form action="/assignments/update" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${assignment.id}">
-                <input type="text" name="name" th:value="${assignment.name}" placeholder="Имя" required>
-                <input type="text" name="description" th:value="${assignment.description}" placeholder="description" required>
-                <input type="text" name="finishDate" th:value="${assignment.finishDate}" placeholder="finishDate">
+        <div class="text-center" style="width: 20em; margin: 20px;">
+
+            <div class="card mb-3 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal" th:text="${assignment.course.name}"></h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title" th:text="${assignment.name}"></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+
+                        <li th:text="${assignment.description}"></li>
+                        <li th:text="${assignment.finishDate}"></li>
+                        <li th:text="${assignment.course.name}"></li>
+
+                        <li sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" style="margin-top:10px;">
+                            <form action="/assignments/update" method="post" style="display:inline; ">
+                                <input type="hidden" name="id" th:value="${assignment.id}">
+                                <input type="text" name="name" th:value="${assignment.name}" placeholder="Имя"
+                                       required>
+                                <input type="text" name="description" th:value="${assignment.description}"
+                                       placeholder="description"
+                                       required>
+                                <input type="text" name="finishDate" th:value="${assignment.finishDate}"
+                                       placeholder="finishDate">
+
+                                <div>
+                                    <label for="assignment.course">courses: </label>
+                                    <select id="assignment.course" th:field="*{assignment.course}">
+                                        <option th:each="course : ${courses}" th:value="${course.id}"
+                                                th:text="${course.name}"></option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning text-white"
+                                        style="background-color: #4f2f2f; border-color: #4f2f2f" formmethod="post">
+                                    Обновить
+                                </button>
+                            </form>
+                            <form action="/assignments/delete" method="post" style="display:inline;">
+                                <input type="hidden" name="id" th:value="${assignment.id}">
+                                <button type="submit" class="btn btn-warning text-white"
+                                        style="background-color: #4f2f2f; border-color: #4f2f2f" formmethod="post">
+                                    Удалить
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
 
 
-                <button type="submit" formmethod="post">Обновить</button>
-            </form>
-            <form action="/assignments/delete" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${assignment.id}">
-                <button type="submit" formmethod="post">Удалить</button>
-            </form>
-        </li>
+        </div>
     </th:block>
 </ul>
 </body>

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UsersService {
-    public List<UsersModel> findAllUsers();
+    public List<UsersModel> findAllUsers(String role);
 
     public UsersModel findUserById(UUID id);
 

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Зачисления</title>
+    <style>
+        .group {
+        width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+        .group_add {
+         width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .input_add {
+
+        }
+    </style>
+</head>
+<body>
+
+
+<div th:insert="blocks/header"></div>
+<form style="margin:10px;" sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" action="/enrollments/add" method="post"
+      th:object="${enrollment}">
+    <h2 style="width: 350px;margin-left: auto;margin-right: auto;text-align: center;">зачислить</h2>
+    <div class="group_add">
+        <input class="form-control input_add" style="width: 300px; margin-left:10px;margin-right:10px;" type="text"
+               name="enrollmentDate"
+               placeholder="enrollmentDate" th:field="*{enrollmentDate}" required>
+
+        <select style="width:200px" class="form-select" aria-label="Default select example" id="student"
+                th:field="*{student}">
+
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.username}"></option>
+
+        </select>
+
+        <select style="width:200px" class="form-select" aria-label="Default select example" id="course"
+                th:field="*{course}">
+
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+
+        </select>
+        <button type="submit" formmethod="post" class="btn btn-warning text-white"
+                style="background-color: #4f2f2f; margin-left:10px;border-color: #4f2f2f">Добавить
+        </button>
+    </div>
+
+</form>
+
+<h2 style="width: 250px;
+  margin-left: auto;
+  margin-right: auto;text-align: center;">список зачислений </h2>
+<ul class="group">
+
+    <th:block th:each="enrollment : ${enrollments}">
+        <div class="text-center" style="width: 20em; margin: 20px;">
+
+            <div class="card mb-3 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal" th:text="${enrollment.student.username}"></h4>
+                </div>
+                <div class="card-body">
+                    <!--          <h1 class="card-title pricing-card-title" th:text="${enrollment.name}"></h1>-->
+                    <ul class="list-unstyled mt-3 mb-4">
+
+                        <li th:text="${enrollment.enrollmentDate}"></li>
+                        <li th:text="${enrollment.course.name}"></li>
+                        <li sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" style="margin-top:10px;">
+                            <form action="/enrollments/update" method="post" style="display:inline; ">
+                                <input type="hidden" name="id" th:value="${enrollment.id}">
+                                <input type="text" name="name" th:value="${enrollment.enrollmentDate}"
+                                       placeholder="enrollmentDate"
+                                       required>
+
+
+                                <div>
+                                    <label for="enrollment.student">student: </label>
+                                    <select id="enrollment.student" th:field="*{enrollment.student}">
+                                        <option th:each="student : ${students}" th:value="${student.id}"
+                                                th:text="${student.username}"></option>
+                                    </select>
+                                </div>
+
+                                <div>
+
+
+                                    <label for="enrollment.course">enrollments: </label>
+                                    <select id="enrollment.course" th:field="*{enrollment.course}">
+                                        <option th:each="course : ${courses}" th:value="${course.id}"
+                                                th:text="${course.name}"></option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning text-white"
+                                        style="background-color: #4f2f2f; border-color: #4f2f2f" formmethod="post">
+                                    Обновить
+                                </button>
+                            </form>
+                            <form action="/enrollments/delete" method="post" style="display:inline;">
+                                <input type="hidden" name="id" th:value="${enrollment.id}">
+                                <button type="submit" class="btn btn-warning text-white"
+                                        style="background-color: #4f2f2f; border-color: #4f2f2f" formmethod="post">
+                                    Удалить
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </th:block>
+</ul>
+</body>
+</html>
+
+
+

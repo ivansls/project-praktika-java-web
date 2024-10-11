@@ -1,11 +1,13 @@
 package com.web_project.school.model;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,16 +17,19 @@ public class UsersModel {
     @GeneratedValue
     private UUID id;
     private String username;
+    @Nullable
+    @Pattern(regexp = "([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)",
+            message = "Емеил не корректен")
     private String email;
     @Size(min = 8, message = "Пароль должен содержать не менее 8 символов")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).*$",
             message = "Пароль должен содержать хотя бы одну букву, одну цифру и один специальный символ (@#$%^&+=!)")
     private String password;
     private boolean active;
-//    @ElementCollection(targetClass = RoleEnum.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<RoleEnum> roles;
+    @ElementCollection(targetClass = RoleEnum.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<RoleEnum> roles;
 
 
 
@@ -37,18 +42,24 @@ public class UsersModel {
     )
     private List<CoursesModel> courses;
 
-    @OneToOne(mappedBy = "user")
+
+    @Nullable
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
     private ProfileModel profile;
 
-    public UsersModel(String username, String email, String password, boolean active, List<CoursesModel> courses, ProfileModel profile) {
+    public UsersModel() {}
+
+    public UsersModel(String username, String email, String password, boolean active, Set<RoleEnum> roles, List<CoursesModel> courses, ProfileModel profile) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.active = active;
-//        this.roles = roles;
+        this.roles = roles;
         this.courses = courses;
         this.profile = profile;
     }
+
 
     public UUID getId() {
         return id;
@@ -74,13 +85,11 @@ public class UsersModel {
         this.email = email;
     }
 
-    public @Size(min = 8, message = "Пароль должен содержать не менее 8 символов") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).*$",
-            message = "Пароль должен содержать хотя бы одну букву, одну цифру и один специальный символ (@#$%^&+=!)") String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(@Size(min = 8, message = "Пароль должен содержать не менее 8 символов") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).*$",
-            message = "Пароль должен содержать хотя бы одну букву, одну цифру и один специальный символ (@#$%^&+=!)") String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -92,15 +101,13 @@ public class UsersModel {
         this.active = active;
     }
 
-//    public Set<RoleEnum> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<RoleEnum> roles) {
-//        this.roles = roles;
-//    }
+    public Set<RoleEnum> getRoles() {
+        return roles;
+    }
 
-
+    public void setRoles(Set<RoleEnum> roles) {
+        this.roles = roles;
+    }
 
     public List<CoursesModel> getCourses() {
         return courses;
@@ -117,8 +124,4 @@ public class UsersModel {
     public void setProfile(ProfileModel profile) {
         this.profile = profile;
     }
-
-
-    // getters and setters
-
 }

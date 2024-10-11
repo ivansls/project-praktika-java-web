@@ -19,6 +19,7 @@ public class ScheduleModule {
     private String startTime;
     private String endTime;
 
+    public ScheduleModule() {}
 
     public ScheduleModule(GroupsModel group, String startTime, String endTime) {
         this.group = group;

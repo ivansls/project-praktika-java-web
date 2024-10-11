@@ -22,6 +22,7 @@ public class EnrollmentsModel{
 
     private String enrollmentDate;
 
+    public EnrollmentsModel() {}
 
     public EnrollmentsModel(CoursesModel course, UsersModel student, String enrollmentDate) {
         this.course = course;

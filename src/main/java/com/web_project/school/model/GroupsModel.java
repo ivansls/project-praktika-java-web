@@ -23,6 +23,8 @@ public class GroupsModel {
     @OneToMany(mappedBy = "group")
     private List<ScheduleModule> schedules;
 
+    public GroupsModel(){}
+
     public GroupsModel(String name, CoursesModel course, List<ScheduleModule> schedules) {
         this.name = name;
         this.course = course;

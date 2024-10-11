@@ -1,26 +1,46 @@
 package com.web_project.school.service;
 
+import com.web_project.school.model.RoleEnum;
 import com.web_project.school.model.UsersModel;
-import com.web_project.school.repository.UserRepository;
+import com.web_project.school.repository.UsersRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class InMemoryUsersServiceImpl implements UsersService{
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
 
 
-    public InMemoryUsersServiceImpl(UserRepository userRepository) {
+    public InMemoryUsersServiceImpl(UsersRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
     @Override
-    public List<UsersModel> findAllUsers() {
-       return userRepository.findAll(Sort.by("id"));
+    public List<UsersModel> findAllUsers(String role) {
+        if(!Objects.equals(role, "ALL")){
+            List<UsersModel> users = new ArrayList<>();
+            userRepository.findAll(Sort.by("id"))
+                    .forEach(u -> {
+                        if (u.getRoles().stream()
+                                .map(RoleEnum::getAuthority)
+                                .collect(Collectors.toSet()).contains(role)) {
+                            users.add((UsersModel) u);
+                        }
+                    });
+//               .filter(user -> user.getRoles().contains(role)
+//               .toList());
+            return users;
+        }else {
+            return userRepository.findAll(Sort.by("id"));
+        }
+
     }
 
     @Override

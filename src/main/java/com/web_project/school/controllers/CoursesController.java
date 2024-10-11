@@ -6,6 +6,7 @@ import com.web_project.school.service.CoursesService;
 import com.web_project.school.service.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/courses")
-//@PreCourseize("hasAnyCourseity('TEACHER', 'ADMIN')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'TEACHER')")
 public class CoursesController {
     @Autowired
     public CoursesService coursesService;
@@ -28,7 +29,7 @@ public class CoursesController {
     public String getAllCourses(Model model) {
         model.addAttribute("courses", coursesService.findAllCourses());
         model.addAttribute("course", new CoursesModel());
-        model.addAttribute("teachers", usersService.findAllUsers());
+        model.addAttribute("teachers", usersService.findAllUsers("TEACHER"));
         return "courseList";
     }
 
@@ -36,7 +37,7 @@ public class CoursesController {
     public String addAllCourses(@Valid @ModelAttribute("course") CoursesModel course, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("courses", coursesService.findAllCourses());
-            model.addAttribute("teachers", usersService.findAllUsers());
+            model.addAttribute("teachers", usersService.findAllUsers("TEACHER"));
             return "courseList";
         }
         coursesService.addCourse(course);
@@ -58,7 +59,7 @@ public class CoursesController {
     @GetMapping("/all/{id}")
     public String getIdCourses(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("courses", coursesService.findCourseById(id));
-        model.addAttribute("teachers", usersService.findAllUsers());
+        model.addAttribute("teachers", usersService.findAllUsers("TEACHER"));
         return "courseList";
     }
 }

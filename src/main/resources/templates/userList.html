@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+</head>
+<body>
+<div th:insert="blocks/header"></div>
+<h1>Список студентов</h1>
+<form action="/users/add" method="post" th:object="${user}">
+  <input type="text" name="username" placeholder="username" th:field="*{username}" required>
+
+  <input type="text" name="email" placeholder="email" th:field="*{email}" required>
+
+  <input type="text" name="password" placeholder="password" th:field="*{password}">
+
+  <input type="text" name="profile.phoneNumber" placeholder="phoneNumber" th:field="*{profile.phoneNumber}" required>
+  <input type="text" name="profile.address" placeholder="address" th:field="*{profile.address}" required>
+  <button type="submit" formmethod="post">Добавить студента</button>
+</form>
+
+<h2>Все студенты: </h2>
+<ul>
+  <th:block th:each="user : ${users}">
+    <li>
+      <span th:text="${user.username} + ' ' + ${user.email} + ' ' + ${user.profile.phoneNumber} + ' ' + ${user.profile.address}"></span>
+      <form action="/users/update" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${user.id}">
+        <input type="text" name="username" th:value="${user.username}" placeholder="username" required>
+        <input type="text" name="email" th:value="${user.email}" placeholder="email" required>
+        <input type="text" name="password" th:value="${user.password}" placeholder="password">
+        <input type="text" name="profile.phoneNumber" th:value="${user.profile.phoneNumber}" placeholder="phoneNumber">
+        <input type="text" name="profile.address" th:value="${user.profile.address}" placeholder="address">
+        <button type="submit" formmethod="post">Обновить</button>
+      </form>
+      <form action="/users/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${user.id}">
+        <button type="submit" formmethod="post">Удалить</button>
+      </form>
+    </li>
+  </th:block>
+</ul>
+</body>
+</html>
